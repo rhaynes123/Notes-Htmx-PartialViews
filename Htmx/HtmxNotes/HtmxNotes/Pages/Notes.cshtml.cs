@@ -51,9 +51,12 @@ namespace HtmxNotes.Pages
             return Partial("_Notes", notes);
         }
 
-        public async Task OnPostClear()
+        public async Task<IActionResult> OnPostClear()
         {
+            // This is hack ish but good enough for the example.
             await _context.Database.ExecuteSqlRawAsync("DELETE FROM Note;");
+            var notes = await _context.Note.ToListAsync();
+            return Partial("_Notes", notes);
         }
     }
 }

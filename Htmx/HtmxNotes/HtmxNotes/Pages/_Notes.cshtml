@@ -5,11 +5,12 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-<div id="notesTbl">
+<div>
     @if (Model is not null && Model.Count != 0)
     {
         <div class="text-center">
             <form hx-post="@Url.Page("./Notes", "Clear")"
+                  hx-target="#innerTable"
                   hx-confirm="Are you sure you want to delete all?">
                 @Html.AntiForgeryToken()
                 <button class="btn btn btn-danger">
@@ -30,7 +31,7 @@
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="innerTable">
                 @foreach (var item in Model.OrderByDescending(note => note.CreatedDate))
                 {
                     <tr>
